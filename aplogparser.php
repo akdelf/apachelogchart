@@ -48,8 +48,10 @@ class aplogparser {
   }
 
   private function parser_line($line) {
-      preg_match($this->pattern, $line, $matches); // pattern to format the line
-      return $matches;
+      echo $line;
+      preg_match("/^(\S+) (\S+) (\S+) \[([^:]+):(\d+:\d+:\d+) ([^\]]+)\] \"(\S+) (.*?) (\S+)\" (\S+) (\S+) (\".*?\") (\".*?\")$/", $line, $matches); // pattern to format the line
+      print_r($matches);
+      //return $matches;
   }
 
 
@@ -60,8 +62,13 @@ class aplogparser {
   
   private function formatlog ($line){
   		
-  		$logs = $this->parser_line($line); // format the line
+  	
+
+  
+
+      $logs = $this->parser_line($line); // format the line
        		
+      //print_r($logs);
       $result = array(); // make an array to store the lin info in
       	$result['ip'] = $logs[1];
       	$result['identity'] = $logs[2];
@@ -107,8 +114,8 @@ class aplogparser {
               $find_key = $this->db->prepare("SELECT * FROM `top24` WHERE key=:key")->bindParam(':key',$key, PDO::PARAM_INT);
               $find_key->execute();
               $row = $find_key->fetch();
-              if (is_array($row))
-                  print_r($row);
+              /*if (is_array($row))
+                  print_r($row);*/
             }
 
 
